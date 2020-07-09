@@ -1,17 +1,40 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import MarketWidget from './widget.js';
+
+
+
+
+const root_base = {
+	display: 'flex',
+	justifyContent: 'center',
+};
+
+const base = {
+	padding: '2vh',
+	width: '40%',
+	height: '80vh',
+	backgroundColor: 'red',
+};
+
+class Base extends React.Component {
+
+	render() {
+		return (
+			<div style={root_base}>
+				<div style={base}>
+					<MarketWidget />
+				</div>
+			</div>
+		);
+	}
+}
+
+
+// ========================================
+
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+	<Base />,
+	document.getElementById('root'),	
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
