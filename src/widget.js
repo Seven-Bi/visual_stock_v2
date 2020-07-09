@@ -11,17 +11,23 @@ const base_widget = {
 	backgroundColor: 'yellow',
 }
 
+const title = {
+	backgroundColor: 'orange',
+}
+
 const nav_bar = {
-	display: 'flex',
-	flexDirection: 'row',
 	backgroundColor: 'blue',
 }
 
 const tool_bar = {
+	backgroundColor: 'green',
+}
+
+const ul_as_bar = {
+	listStyleType: 'none',
 	display: 'flex',
 	flexDirection: 'row',
-	backgroundColor: 'black',
-
+	justifyContent: 'space-around',
 }
 
 class MarketWidget extends React.Component {
@@ -29,9 +35,24 @@ class MarketWidget extends React.Component {
 	//nav_bar, tool_bar and tab_bar will have data_window callback functions
 	render() {
 		return (
-			<div style={base_widget}>
-				<div style={nav_bar}> </div>
-				<div style={tool_bar}> </div>
+			<div style = { base_widget }>
+				<div style = { title }><span> Market </span></div>
+				<div style = { nav_bar }>
+					<ul style = { ul_as_bar }>
+						<li>a</li>
+						<li>b</li>
+						<li>c</li>
+						<li>d</li>
+					</ul>
+				</div>
+				<div style = { tool_bar }>
+					<ul style = { ul_as_bar }>
+						<li>1</li>
+						<li>2</li>
+						<li>3</li>
+					</ul>
+				</div>
+				
 				<PriceTrending />
 			</div>
 		);

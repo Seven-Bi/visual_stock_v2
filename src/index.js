@@ -21,8 +21,8 @@ class Base extends React.Component {
 
 	render() {
 		return (
-			<div style={root_base}>
-				<div style={base}>
+			<div style = { root_base }>
+				<div style = { base }>
 					<MarketWidget />
 				</div>
 			</div>
