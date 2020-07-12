@@ -11,7 +11,7 @@ const root_base = {
 };
 
 const base = {
-	padding: '2vh',
+	padding: '1vh',
 	width: '40%',
 	height: '80vh',
 	backgroundColor: 'red',

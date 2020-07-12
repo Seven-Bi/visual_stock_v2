@@ -3,15 +3,19 @@ import React from 'react';
 
 
 const inner_table = {
-
+	backgroundColor: 'grey',
+	padding: '1vh',
+	height: '100%',
 }
 
-const tab_bar = {
-
+const table_window = {
+	backgroundColor: 'white',
+	width: '100%',
+	height: '100%',
 }
 
-const data_window = {
-
+const table_head = {
+	textAlign: 'left',
 }
 
 class PriceTrending extends React.Component {
@@ -19,13 +23,24 @@ class PriceTrending extends React.Component {
 	//
 	render() {
 		return (
-			<div className="inner_table">
-				<div className="tab_bar">
-
-				</div>
-				<div className="data_window">
-
-				</div>
+			<div style = { inner_table }>
+				<table style = { table_window }>
+					<tr>
+						<th style = { table_head }>Pair</th>
+						<th style = { table_head }>Last Price</th>
+						<th style = { table_head }>Change</th>
+					</tr>
+						<tr>
+							<td>Jill</td>
+							<td>Smith</td>
+							<td>50</td>
+						</tr>
+						<tr>
+							<td>Jill</td>
+							<td>Smith</td>
+							<td>50</td>
+						</tr>
+				</table>
 			</div>
 		);
 	}

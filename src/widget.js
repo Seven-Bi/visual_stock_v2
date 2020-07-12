@@ -13,21 +13,32 @@ const base_widget = {
 
 const title = {
 	backgroundColor: 'orange',
+	padding: '1vh',
+	fontFamily: 'Arial, Helvetica, sans-serif',
 }
 
 const nav_bar = {
 	backgroundColor: 'blue',
+	padding: '1vh',
+	//display: 'flex',
+	// flexDirection: 'row',
+	// alignItems: 'center',
 }
 
 const tool_bar = {
 	backgroundColor: 'green',
+	padding: '1vh',
+	//display: 'flex',
+	// flexDirection: 'row',
+	// alignItems: 'center',
 }
 
 const ul_as_bar = {
 	listStyleType: 'none',
 	display: 'flex',
 	flexDirection: 'row',
-	justifyContent: 'space-around',
+	justifyContent: 'space-between',
+	paddingInlineStart: '0',
 }
 
 class MarketWidget extends React.Component {
@@ -36,18 +47,19 @@ class MarketWidget extends React.Component {
 	render() {
 		return (
 			<div style = { base_widget }>
-				<div style = { title }><span> Market </span></div>
+				<div style = { title }><span><h3> Market </h3></span></div>
 				<div style = { nav_bar }>
 					<ul style = { ul_as_bar }>
-						<li>a</li>
-						<li>b</li>
-						<li>c</li>
-						<li>d</li>
+						<li>Margin</li>
+						<li>BNB</li>
+						<li>BTC</li>
+						<li>ALTS</li>
+						<li>USD</li>
 					</ul>
 				</div>
 				<div style = { tool_bar }>
 					<ul style = { ul_as_bar }>
-						<li>1</li>
+						<li><input type="text" /></li>
 						<li>2</li>
 						<li>3</li>
 					</ul>
