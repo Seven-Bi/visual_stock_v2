@@ -13,6 +13,7 @@
     "react-bootstrap": "^1.2.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
+    "socket.io": "^2.3.0",
     "typescript": "^3.9.6",
     "yargs-parser": "^18.1.3"
   },
