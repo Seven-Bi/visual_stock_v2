@@ -19,39 +19,31 @@ const base = {
 
 const url = 'wss://stream.binance.com/stream?streams=!miniTicker@arr'
 const connection = new WebSocket(url)
+const socket_con = () => {
+	if (connection.readyState === WebSocket.OPEN) {
+		connection.close()
+	}
+	else if (connection.readyState === WebSocket.CLOSE) {
+		connection.open()
+	}
+	// alert('nimei')
+}
+
 
 class Base extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			pause: false
-		};
-	}
 
 	componentDidMount() {
 		connection.onopen = () => {
 			alert('open')
 		}
-		connection.onerror = error => {
-			console.log(`WebSocket error: ${error}`)
-		}
 		connection.onclose = () => {
-			// connection.close()
-			// this.setState(state => ({
-			// 	pause: true
-			// }))
-		}		
+			alert('close')
+		}
 		connection.onmessage = e => {
 			console.log(e.data)
 		}
-	}
-
-	close_socket() {
-		if (!this.state.pause) {
-			connection.close()
-		}
-		else {
-
+		connection.onerror = error => {
+			console.log(`WebSocket error: ${error}`)
 		}
 	}
 
@@ -61,6 +53,7 @@ class Base extends React.Component {
 				<div style = { base }>
 					<MarketWidget />
 				</div>
+				<button onClick={socket_con}/>
 			</div>
 		);
 	}
