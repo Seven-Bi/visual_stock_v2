@@ -18,34 +18,69 @@ const base = {
 };
 
 const url = 'wss://stream.binance.com/stream?streams=!miniTicker@arr'
-const connection = new WebSocket(url)
-const socket_con = () => {
-	if (connection.readyState === WebSocket.OPEN) {
-		connection.close()
+let isConnected = false
+let socket = null
+
+
+let setup_websocket = () => {
+	return new Promise((resolve, reject) => {
+		let channel = new WebSocket(url)
+		channel.onopen = () => {
+			isConnected = true
+			resolve(channel)
+		}
+		channel.onmessage = (e) => {
+			console.log(e.data)
+		}
+		channel.onerror = (e) => {
+			reject(e)
+		}
+	})
+}
+
+let close_websocket = (channel) => {
+	return new Promise((resolve, reject) => {
+		channel.close()
+		channel.onclose = () => {
+			isConnected = false
+			resolve(null)
+		}
+		channel.onerror = (e) => {
+			reject(e)
+		}
+	})
+}
+
+let websocket_clickhandler = () => {
+	if (!isConnected) {		
+		setup_websocket().then(channel => {
+			socket = channel
+			window.alert('open channel !')
+		}).catch(error => {
+			window.alert('failed to setup !')
+		})
 	}
-	else if (connection.readyState === WebSocket.CLOSE) {
-		connection.open()
+	else {
+		close_websocket(socket).then(channel => {
+			socket = channel
+			window.alert('close channel !')
+		}).catch(error => {
+			window.alert('failed to close !')
+		})
 	}
-	// alert('nimei')
 }
 
 
 class Base extends React.Component {
 
-	componentDidMount() {
-		connection.onopen = () => {
-			alert('open')
-		}
-		connection.onclose = () => {
-			alert('close')
-		}
-		connection.onmessage = e => {
-			console.log(e.data)
-		}
-		connection.onerror = error => {
-			console.log(`WebSocket error: ${error}`)
-		}
-	}
+	// componentDidMount() {
+	// 	channel.onmessage = e => {
+	// 		console.log(e.data)
+	// 	}
+	// 	channel.onerror = error => {
+	// 		console.log(`WebSocket error: ${error}`)
+	// 	}
+	// }
 
 	render() {
 		return (
@@ -53,7 +88,7 @@ class Base extends React.Component {
 				<div style = { base }>
 					<MarketWidget />
 				</div>
-				<button onClick={socket_con}/>
+				<button onClick={websocket_clickhandler}/>
 			</div>
 		);
 	}
