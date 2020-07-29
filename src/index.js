@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MarketWidget from './widget.js';
-
+import MyProvider from './my_provider.js'
 
 
 
@@ -73,23 +73,38 @@ let websocket_clickhandler = () => {
 
 class Base extends React.Component {
 
-	// componentDidMount() {
-	// 	channel.onmessage = e => {
-	// 		console.log(e.data)
-	// 	}
-	// 	channel.onerror = error => {
-	// 		console.log(`WebSocket error: ${error}`)
-	// 	}
-	// }
+
+	componentDidMount() {
+		socket = setup_websocket().then(channel => {
+			socket = channel
+			window.alert('open channel !')
+		}).catch(error => {
+			window.alert('failed to setup !')
+		})
+
+
+		socket.onclose = () => {
+			setTimeout(() => {
+				socket = setup_websocket().then(channel => {
+					socket = channel
+					window.alert('open channel !')
+				}).catch(error => {
+					window.alert('failed to setup !')
+				})
+			}, 4000);
+		}
+	}
 
 	render() {
 		return (
-			<div style = { root_base }>
-				<div style = { base }>
-					<MarketWidget />
+			<MyProvider>
+				<div style = { root_base }>
+					<div style = { base }>
+						<MarketWidget />
+					</div>
+					<button onClick={websocket_clickhandler}/>
 				</div>
-				<button onClick={websocket_clickhandler}/>
-			</div>
+			</MyProvider>
 		);
 	}
 }
