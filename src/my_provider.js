@@ -3,7 +3,8 @@ import MyContext from './my_context.js';
 
 
 
-const api = 'https://www.binance.com/exchange-api/v1/public/asset-service/product/get-products'
+const api = '/get-products'
+// const api = 'http://localhost:3000'
 
 
 class MyProvider extends React.Component {
@@ -16,16 +17,16 @@ class MyProvider extends React.Component {
         .then(res => {
             console.log(res)
             // const j_str = JSON.stringify(res);
-            // JSON.parse(j_str, (key, value) => {
-                //console.log("=========== " + j_str + " ============")
-                // if (key === "data") {
-                //     console.log(value)
-                //     // return value
-                // }
-                // else {
-                //     console.log(value)
-                // }
-            //})
+            // console.log(j_str)
+            // // JSON.parse(j_str, (key, value) => {
+            // //     if (key === "data") {
+            // //         console.log(value)
+            // //         // return value
+            // //     }
+            // //     else {
+            // //         console.log(key)
+            // //     }
+            // // })
         })
     }
 
