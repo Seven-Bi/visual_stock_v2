@@ -4,40 +4,53 @@ import MyContext from './my_context.js';
 
 
 const api = '/get-products'
-// const api = 'http://localhost:3000'
 
+let recur_foo = (num, data_list, data_dict) => {
+    if (num <= 0) {
+        return data_dict
+    }
+
+    var temp_l = []
+    var key = data_list[num-1]['b']
+
+    data_list.map(
+        i => {
+            if (i.pm === key) {
+                temp_l.push(i.b)
+            }
+        }
+    )
+    data_dict[key] = temp_l
+    num -= 1
+    return recur_foo(num, data_list, data_dict)
+}
 
 class MyProvider extends React.Component {
-    state = {
-        market_data: []
+    constructor(props) {
+        super(props);
+        this.state = {
+            market_data: [],
+        };
     }
+
 
     componentDidMount() {
         fetch(api)
-        .then(res => {
-            console.log(res)
-            // const j_str = JSON.stringify(res);
-            // console.log(j_str)
-            // // JSON.parse(j_str, (key, value) => {
-            // //     if (key === "data") {
-            // //         console.log(value)
-            // //         // return value
-            // //     }
-            // //     else {
-            // //         console.log(key)
-            // //     }
-            // // })
+        .then(
+            res => {
+                return res.json()
+            }
+        )
+        .then((output) => {
+            var api_data = output.data
+            var num = api_data.length
+            var data_list = api_data
+            var data_dict = {}
+            var data = recur_foo(num, data_list, data_dict)
+            this.setState({market_data: data})
+            console.log(this.state.market_data)
         })
     }
-
-    // componentDidMount() {
-    //     fetch(api)
-    //     .then(res => res.json())
-    //     .then((data) => {
-    //         this.setState({ contacts: data })
-    //     })
-    //     .catch(console.log)
-    // }
 
 
     render() {
