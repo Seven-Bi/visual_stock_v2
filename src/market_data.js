@@ -1,4 +1,5 @@
 import React from 'react';
+import MyContext from './my_context.js';
 
 
 
@@ -19,8 +20,9 @@ const table_head = {
 	textAlign: 'left',
 }
 
-class PriceTrending extends React.Component {
 
+class PriceTrending extends React.Component {
+	
 	render() {
 		return (
 			<div style = { inner_table }>
@@ -32,78 +34,11 @@ class PriceTrending extends React.Component {
 							<th style = { table_head }>Change</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td>Jill</td>
-							<td>Smith</td>
-							<td>50</td>
-						</tr>
-						<tr>
-							<td>Jill</td>
-							<td>Smith</td>
-							<td>50</td>
-						</tr>
-						<tr>
-							<td>Jill</td>
-							<td>Smith</td>
-							<td>50</td>
-						</tr>
-						<tr>
-							<td>Jill</td>
-							<td>Smith</td>
-							<td>50</td>
-						</tr>
-						<tr>
-							<td>Jill</td>
-							<td>Smith</td>
-							<td>50</td>
-						</tr>
-						<tr>
-							<td>Apple</td>
-							<td>Steven</td>
-							<td>500</td>
-						</tr>	
-						<tr>
-							<td>Apple</td>
-							<td>Steven</td>
-							<td>500</td>
-						</tr>
-						<tr>
-							<td>Jill</td>
-							<td>Smith</td>
-							<td>50</td>
-						</tr>
-						<tr>
-							<td>Jill</td>
-							<td>Smith</td>
-							<td>50</td>
-						</tr>
-						<tr>
-							<td>Jill</td>
-							<td>Smith</td>
-							<td>50</td>
-						</tr>
-						<tr>
-							<td>Jill</td>
-							<td>Smith</td>
-							<td>50</td>
-						</tr>
-						<tr>
-							<td>Jill</td>
-							<td>Smith</td>
-							<td>50</td>
-						</tr>
-						<tr>
-							<td>Apple</td>
-							<td>Steven</td>
-							<td>500</td>
-						</tr>	
-						<tr>
-							<td>Apple</td>
-							<td>Steven</td>
-							<td>500</td>
-						</tr>
-					</tbody>															
+					<MyContext.Consumer>
+						{(market_data) => {
+							console.log(market_data.data)
+						}}
+					</MyContext.Consumer>														
 				</table>
 			</div>
 		);

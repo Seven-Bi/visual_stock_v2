@@ -20,17 +20,11 @@ const title = {
 const nav_bar = {
 	backgroundColor: 'blue',
 	padding: '1vh',
-	//display: 'flex',
-	// flexDirection: 'row',
-	// alignItems: 'center',
 }
 
 const tool_bar = {
 	backgroundColor: 'green',
 	padding: '1vh',
-	//display: 'flex',
-	// flexDirection: 'row',
-	// alignItems: 'center',
 }
 
 const ul_as_bar = {
@@ -40,6 +34,8 @@ const ul_as_bar = {
 	justifyContent: 'space-between',
 	paddingInlineStart: '0',
 }
+
+
 
 class MarketWidget extends React.Component {
 
