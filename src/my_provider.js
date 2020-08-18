@@ -6,34 +6,34 @@ import MyContext from './my_context.js';
 
 const api = '/get-products'
 
-let recur_foo = (num, data_list, data_dict) => {
-    if (num <= 0) {
-        return data_dict
-    }
+// let recur_foo = (num, data_list, data_dict) => {
+//     if (num <= 0) {
+//         return data_dict
+//     }
 
-    var temp_l = []
-    var key = data_list[num-1]['b']
+//     var temp_l = []
+//     var key = data_list[num-1]['b']
 
-    data_list.forEach(
-        i => {
-            if (i.pm === key) {
-                temp_l.push(i.b)
-            }
-        }
-    )
+//     data_list.forEach(
+//         i => {
+//             if (i.pm === key) {
+//                 temp_l.push(i.b)
+//             }
+//         }
+//     )
 
-    data_dict[key] = temp_l
-    num -= 1
-    return recur_foo(num, data_list, data_dict)
-}
+//     data_dict[key] = temp_l
+//     num -= 1
+//     return recur_foo(num, data_list, data_dict)
+// }
 
 class MyProvider extends React.Component {
     constructor(props) {
         super(props);
-        // this.handle_click = props.callback
+        this.handle_click = props.callback
         this.state = {
             market_data: [],
-            market_structure: [],
+            // market_structure: [],
             loaded: false
         };
     }
@@ -47,16 +47,16 @@ class MyProvider extends React.Component {
         )
         .then((output) => {
             var api_data = output.data
-            var num = api_data.length
-            var data_list = api_data
-            var data_dict = {}
-            var data = recur_foo(num, data_list, data_dict)
+            // var num = api_data.length
+            // var data_list = api_data
+            // var data_dict = {}
+            // var data = recur_foo(num, data_list, data_dict)
             this.setState({
                 market_data: api_data,
-                market_structure: data,
+                // market_structure: data,
                 loaded: true
             })
-            // this.handle_click
+            this.handle_click(api_data) // give api data back to index for forming the UI menue
         })
     }
 
