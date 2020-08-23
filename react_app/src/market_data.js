@@ -4,35 +4,40 @@ import MyContext from './my_context.js';
 
 
 
-
 class PriceTrending extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            change: '0.0'
-        };
-    }
 
-	callback(data) {
-		this.setState({change: data})
-	}
-
-	render() {
-		return (
-			<div>
-				<MyContext.Consumer>
-					{
-						market_data => {
-							var ss = market_data.data[0].s
-							return (
-								<h3>{ ss }</h3>
+    render() {
+        if (this.props.data_list) {
+            return (
+                <MyContext.Consumer>
+                	{
+						market_data => 
+							(
+								<div>
+									{ 
+										market_data.change(this.props.data_list, market_data.data) 
+									}
+								</div>
 							)
-						}
 					}
-				</MyContext.Consumer>
-			</div>
-		);
-	}
+                </MyContext.Consumer>
+            );
+        }
+        else {
+            return (
+                <MyContext.Consumer>
+                	{
+						market_data => 
+							(
+								<div>
+									{ market_data.data.s } -- { market_data.data.o }
+								</div>
+							)
+					}
+                </MyContext.Consumer>
+            );
+        }
+    }
 }
 
 export default PriceTrending;

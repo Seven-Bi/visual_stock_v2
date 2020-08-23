@@ -1,5 +1,6 @@
 import React from 'react';
-// import PriceTrending from './market_data.js';
+import PriceTrending from './market_data.js';
+
 
 
 
@@ -55,51 +56,51 @@ let socket = null
 // 	)
 // }
 
-let setup_websocket = (callback) => {
-	return new Promise((resolve, reject) => {
-		let channel = new WebSocket(url)
-		channel.onopen = () => {
-			isConnected = true
-			resolve(channel)
-		}
-		channel.onmessage = (e) => {
-			// console.log(e.data)
-			// console.log(callback)
-			callback(e.data)
-			// ref.current.callback(calculate_change(basedata, e.data)) //xxxx	
-		}
-		channel.onerror = (e) => {
-			reject(e)
-		}
-	})
-}
 
-let close_websocket = (channel) => {
-	return new Promise((resolve, reject) => {
-		channel.close()
-		channel.onclose = () => {
-			isConnected = false
-			resolve(null)
-		}
-		channel.onerror = (e) => {
-			reject(e)
-		}
-	})
-}
 
 
 class MarketWidget extends React.Component {
 	constructor(props) {
 		super(props)
-
 		this.state = {
-			real_data: []
+			data_list: null
 		}
 	}
 
-	socket_setup(callback) {
-		// this.setState({api_data: data})
-		socket = setup_websocket(callback).then(channel => {
+	setup_websocket() {
+		return new Promise((resolve, reject) => {
+			let channel = new WebSocket(url)
+			channel.onopen = () => {
+				isConnected = true
+				resolve(channel)
+			}
+			channel.onmessage = (e) => {
+				// console.log(e.data)
+				this.setState({
+					data_list: e.data
+				})
+			}
+			channel.onerror = (e) => {
+				reject(e)
+			}
+		})
+	}
+
+	close_websocket(channel) {
+		return new Promise((resolve, reject) => {
+			channel.close()
+			channel.onclose = () => {
+				isConnected = false
+				resolve(null)
+			}
+			channel.onerror = (e) => {
+				reject(e)
+			}
+		})
+	}
+
+	socket_setup() {
+		socket = this.setup_websocket().then(channel => {
 			socket = channel
 			window.alert('open channel !')
 		}).catch(error => {
@@ -108,7 +109,7 @@ class MarketWidget extends React.Component {
 
 		// socket.onclose = () => {
 			// setTimeout(() => {
-			// 	socket = setup_websocket(callback).then(channel => {
+			// 	socket = setup_websocket().then(channel => {
 			// 		socket = channel
 			// 		window.alert('open channel !')
 			// 	}).catch(error => {
@@ -118,9 +119,9 @@ class MarketWidget extends React.Component {
 		// }
 	}
 
-	websocket_clickhandler(callback) {
+	websocket_clickhandler() {
 		if (!isConnected) {		
-			setup_websocket(callback).then(channel => {
+			this.setup_websocket().then(channel => {
 				socket = channel
 				window.alert('open channel !')
 			}).catch(error => {
@@ -128,7 +129,7 @@ class MarketWidget extends React.Component {
 			})
 		}
 		else {
-			close_websocket(socket).then(channel => {
+			this.close_websocket(socket).then(channel => {
 				socket = channel
 				window.alert('close channel !')
 			}).catch(error => {
@@ -140,6 +141,7 @@ class MarketWidget extends React.Component {
 	render() {
 		return (
 			<div style = { base_widget }>
+				<button onClick={() => this.websocket_clickhandler()}/>
 				<div style = { title }>
 					<span><h3> Market </h3></span>
 				</div>
@@ -149,7 +151,6 @@ class MarketWidget extends React.Component {
 						<li>BNB</li>
 						<li>BTC</li>
 						<li>ALTS</li>
-						<li>USD</li>
 					</ul>
 				</div>
 				<div style = { tool_bar }>
@@ -159,7 +160,7 @@ class MarketWidget extends React.Component {
 						<li>3</li>
 					</ul>
 				</div>
-				
+				<PriceTrending data_list={ this.state.data_list }/>
 			</div>
 		);
 	}
