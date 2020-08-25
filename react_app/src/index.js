@@ -1,7 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import MyContext from './my_context.js';
-import MarketWidget from './widget.js';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import MyContext from './my_context.js'
+import MarketWidget from './widget.js'
 
 
 
@@ -12,6 +12,7 @@ const root = {
 }
 
 const api = '/get-products'
+
 let calculate = (update_data, api_dict) => {
 	var list = JSON.parse(update_data)
     const listItems = list.data.map((item) => 
@@ -24,6 +25,26 @@ let calculate = (update_data, api_dict) => {
 	return (
 		<ul> { listItems } </ul>
 	)
+}
+
+let recur_foo = (num, data_list, data_dict) => {
+    if (num <= 0) {
+        return data_dict
+    }
+
+    var temp_l = []
+    var key = data_list[num-1]['q']
+
+    data_list.map(
+        i => {
+            if (i.q === key) {
+                temp_l.push(i.b + '/' + i.q)
+            }
+        }
+    )
+    data_dict[key] = temp_l
+    num -= 1
+    return recur_foo(num, data_list, data_dict)
 }
 
 let sort = (list) => {
@@ -42,6 +63,7 @@ class Index extends React.Component {
         super(props)
         this.myRef = React.createRef();
         this.state = {
+            data_structure: null,
             market_data: null,
             loaded: false
         }
@@ -55,12 +77,16 @@ class Index extends React.Component {
             }
         )
         .then((output) => {
+            var data_dict = {}
+            recur_foo(output.data.length, output.data, data_dict)
+
             var api_data = sort(output.data)
             this.setState({
+                data_structure: data_dict,
                 market_data: api_data,
                 loaded: true
             })
-            this.myRef.current.socket_setup()
+            //this.myRef.current.socket_setup()
         })
     }
 
@@ -69,6 +95,7 @@ class Index extends React.Component {
             return (
                 <MyContext.Provider
                     value = {{
+                        structure: this.state.data_structure,
                         data: this.state.market_data,
                         change: calculate
                     }}

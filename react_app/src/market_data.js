@@ -1,5 +1,5 @@
-import React from 'react';
-import MyContext from './my_context.js';
+import React from 'react'
+import MyContext from './my_context.js'
 
 
 

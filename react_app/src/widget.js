@@ -1,5 +1,7 @@
-import React from 'react';
-import PriceTrending from './market_data.js';
+import React from 'react'
+import PriceTrending from './market_data.js'
+import Tabs from 'react-bootstrap/Tabs'
+import MyContext from './my_context.js'
 
 
 
@@ -20,11 +22,6 @@ const title = {
 
 const nav_bar = {
 	backgroundColor: 'blue',
-	padding: '1vh',
-}
-
-const tool_bar = {
-	backgroundColor: 'green',
 	padding: '1vh',
 }
 
@@ -49,7 +46,9 @@ class MarketWidget extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			data_list: null
+			data_list: null,
+			tab_index: [],
+			tab_list: {}
 		}
 	}
 
@@ -61,6 +60,7 @@ class MarketWidget extends React.Component {
 				resolve(channel)
 			}
 			channel.onmessage = (e) => {
+				console.log(e.data)
 				this.setState({
 					data_list: e.data
 				})
@@ -91,17 +91,6 @@ class MarketWidget extends React.Component {
 		}).catch(error => {
 			window.alert('failed to setup !')
 		})
-
-		// socket.onclose = () => {
-			// setTimeout(() => {
-			// 	socket = setup_websocket().then(channel => {
-			// 		socket = channel
-			// 		window.alert('open channel !')
-			// 	}).catch(error => {
-			// 		window.alert('failed to setup !')
-			// 	})
-			// }, 4000);
-		// }
 	}
 
 	websocket_clickhandler() {
@@ -132,17 +121,19 @@ class MarketWidget extends React.Component {
 				</div>
 				<div style = { nav_bar }>
 					<ul style = { ul_as_bar }>
-						<li>Margin</li>
-						<li>BNB</li>
-						<li>BTC</li>
-						<li>ALTS</li>
-					</ul>
-				</div>
-				<div style = { tool_bar }>
-					<ul style = { ul_as_bar }>
-						<li><input type="text" /></li>
-						<li>2</li>
-						<li>3</li>
+		                <MyContext.Consumer>
+		                	{
+		                		api_data => (
+							        <React.Fragment>
+							            { Object.keys(api_data.structure).map((item, i) => (
+						            		<li key={i}>
+						            			{ item }
+						            		</li>
+							        	))}
+							        </React.Fragment>
+						        )
+							}
+		                </MyContext.Consumer>
 					</ul>
 				</div>
 				<PriceTrending data_list={ this.state.data_list }/>
