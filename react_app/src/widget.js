@@ -43,20 +43,6 @@ let isConnected = false
 let socket = null
 
 
-// let calculate_change = (basedata, data) => {
-// 	var code = JSON.parse(data).data[0].s
-// 	var l_price = JSON.parse(data).data[0].c
-// 	basedata.forEach (
-// 		i => {
-// 			if (i.s === code) {
-// 				//console.log((parseFloat(i.o) - parseFloat(l_price)) / parseFloat(i.o))
-// 				return (parseFloat(i.o) - parseFloat(l_price)) / parseFloat(i.o)
-// 			}
-// 		}
-// 	)
-// }
-
-
 
 
 class MarketWidget extends React.Component {
@@ -75,7 +61,6 @@ class MarketWidget extends React.Component {
 				resolve(channel)
 			}
 			channel.onmessage = (e) => {
-				// console.log(e.data)
 				this.setState({
 					data_list: e.data
 				})

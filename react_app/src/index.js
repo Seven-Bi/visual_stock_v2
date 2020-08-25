@@ -14,16 +14,12 @@ const root = {
 const api = '/get-products'
 let calculate = (update_data, api_dict) => {
 	var list = JSON.parse(update_data)
-	const listItems = list.data.forEach(item => {
-		var code_name = item.s
-
-		console.log(code_name)
-		console.log(item.c)
-		console.log(api_dict[code_name])
-		// return(
-		// 	<li><span>{code_name}</span><span>{Math.abs(item.c - api_dict[code_name])/api_dict[code_name]}</span></li>
-		// )
-	})
+    const listItems = list.data.map((item) => 
+        <li>
+            <span>{item.s} ==> </span>
+            <span>Change: {Math.abs(item.c - api_dict[item.s])/api_dict[item.s]}</span>
+        </li>      
+    )
 
 	return (
 		<ul> { listItems } </ul>
