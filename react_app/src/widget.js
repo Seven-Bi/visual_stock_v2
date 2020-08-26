@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PriceTrending from './market_data.js'
-import Tabs from 'react-bootstrap/Tabs'
 import MyContext from './my_context.js'
+import Tabs from 'react-bootstrap/Tabs'
+import Tab from 'react-bootstrap/Tab'
 
 
 
@@ -21,34 +22,64 @@ const title = {
 }
 
 const nav_bar = {
-	backgroundColor: 'blue',
-	padding: '1vh',
+	margin: '2vh',
 }
-
-const ul_as_bar = {
-	listStyleType: 'none',
-	display: 'flex',
-	flexDirection: 'row',
-	justifyContent: 'space-between',
-	paddingInlineStart: '0',
-}
-
-
 
 const url = 'wss://stream.binance.com/stream?streams=!miniTicker@arr'
 let isConnected = false
 let socket = null
 
 
+// const title = {}
+// const data
+
+function ControlledTabs(props) {
+	const [key, setKey] = useState('BTC');
+	const index_list = props.indexs
+
+	if(index_list) {
+		return (
+			<Tabs
+				id="controlled-tab-example"
+				activeKey={key}
+				onSelect={(k) => setKey(k)}
+			>
+				{	
+					index_list.map((item, i) =>
+						<Tab eventKey={item} title={item} key={i}></Tab>
+					)
+
+				}	
+			</Tabs>
+		)
+	}
+	else {
+		return (
+			<div>loading ... </div>
+		)
+	}
+
+
+}
 
 
 class MarketWidget extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			data_list: null,
-			tab_index: [],
-			tab_list: {}
+			data_list: null, //steam data
+			tab_index: null, //keys
+			tab_dict: null,  //keys and its subkeys
+			key: 'BTC'	//current key index
+		}
+	}
+
+	componentDidMount() {
+		if(this.props.structure) {
+			this.setState({
+				tab_index: Object.keys(this.props.structure),
+				tab_dict: this.props.structure,
+			})
 		}
 	}
 
@@ -120,25 +151,13 @@ class MarketWidget extends React.Component {
 					<span><h3> Market </h3></span>
 				</div>
 				<div style = { nav_bar }>
-					<ul style = { ul_as_bar }>
-		                <MyContext.Consumer>
-		                	{
-		                		api_data => (
-							        <React.Fragment>
-							            { Object.keys(api_data.structure).map((item, i) => (
-						            		<li key={i}>
-						            			{ item }
-						            		</li>
-							        	))}
-							        </React.Fragment>
-						        )
-							}
-		                </MyContext.Consumer>
-					</ul>
+
+					<ControlledTabs indexs={this.state.tab_index}/>
+
 				</div>
-				<PriceTrending data_list={ this.state.data_list }/>
+				<PriceTrending data_list={ this.state.data_list } />
 			</div>
-		);
+		)
 	}
 }
 

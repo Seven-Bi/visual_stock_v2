@@ -15,8 +15,8 @@ const api = '/get-products'
 
 let calculate = (update_data, api_dict) => {
 	var list = JSON.parse(update_data)
-    const listItems = list.data.map((item) => 
-        <li>
+    const listItems = list.data.map((item, i) => 
+        <li key={i}>
             <span>{item.s} ==> </span>
             <span>Change: {Math.abs(item.c - api_dict[item.s])/api_dict[item.s]}</span>
         </li>      
@@ -35,7 +35,7 @@ let recur_foo = (num, data_list, data_dict) => {
     var temp_l = []
     var key = data_list[num-1]['q']
 
-    data_list.map(
+    data_list.forEach(
         i => {
             if (i.q === key) {
                 temp_l.push(i.b + '/' + i.q)
@@ -95,13 +95,12 @@ class Index extends React.Component {
             return (
                 <MyContext.Provider
                     value = {{
-                        structure: this.state.data_structure,
                         data: this.state.market_data,
                         change: calculate
                     }}
                 >
 					<div style = { root }>
-						<MarketWidget ref={this.myRef} />
+						<MarketWidget structure={this.state.data_structure} ref={this.myRef} />
 					</div>
                 </MyContext.Provider>
             );
