@@ -30,7 +30,7 @@ class PriceTrending extends React.Component {
 						market_data => 
 							(
 								<div>
-									{ market_data.data.s } -- { market_data.data.o }
+									{ market_data.data.s } { market_data.data.o }
 								</div>
 							)
 					}

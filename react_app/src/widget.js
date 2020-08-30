@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
-import PriceTrending from './market_data.js'
-import MyContext from './my_context.js'
-import Tabs from 'react-bootstrap/Tabs'
-import Tab from 'react-bootstrap/Tab'
+import React from 'react'
+
+// import PriceTrending from './market_data.js'
+import ScrollableTabsButtonAuto from './tab_panel.js'
+
+// import MyContext from './my_context.js'
+import { Button } from '@material-ui/core'
+// import Tabs from '@material-ui/core/Tabs';
+// import Tab from '@material-ui/core/Tab';
 
 
 
@@ -28,39 +32,6 @@ const nav_bar = {
 const url = 'wss://stream.binance.com/stream?streams=!miniTicker@arr'
 let isConnected = false
 let socket = null
-
-
-// const title = {}
-// const data
-
-function ControlledTabs(props) {
-	const [key, setKey] = useState('BTC');
-	const index_list = props.indexs
-
-	if(index_list) {
-		return (
-			<Tabs
-				id="controlled-tab-example"
-				activeKey={key}
-				onSelect={(k) => setKey(k)}
-			>
-				{	
-					index_list.map((item, i) =>
-						<Tab eventKey={item} title={item} key={i}></Tab>
-					)
-
-				}	
-			</Tabs>
-		)
-	}
-	else {
-		return (
-			<div>loading ... </div>
-		)
-	}
-
-
-}
 
 
 class MarketWidget extends React.Component {
@@ -143,19 +114,25 @@ class MarketWidget extends React.Component {
 		}
 	}
 
+
+	/* <ControlledTabs indexs={this.state.tab_index}/> */
+
 	render() {
+		const NewComponent = ScrollableTabsButtonAuto([1,2,3,4,5])
 		return (
 			<div style = { base_widget }>
-				<button onClick={() => this.websocket_clickhandler()}/>
+				<Button variant="contained" color="primary" href="#contained-buttons" onClick={() => this.websocket_clickhandler()}>
+ 					Pause/Start
+				</Button>				
 				<div style = { title }>
 					<span><h3> Market </h3></span>
 				</div>
 				<div style = { nav_bar }>
 
-					<ControlledTabs indexs={this.state.tab_index}/>
+					<NewComponent />
 
 				</div>
-				<PriceTrending data_list={ this.state.data_list } />
+				{/* <PriceTrending data_list={ this.state.data_list } /> */}
 			</div>
 		)
 	}
