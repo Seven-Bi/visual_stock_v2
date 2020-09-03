@@ -1,12 +1,7 @@
 import React from 'react'
-
-// import PriceTrending from './market_data.js'
 import ScrollableTabsButtonAuto from './tab_panel.js'
-
-// import MyContext from './my_context.js'
 import { Button } from '@material-ui/core'
-// import Tabs from '@material-ui/core/Tabs';
-// import Tab from '@material-ui/core/Tab';
+
 
 
 
@@ -114,11 +109,7 @@ class MarketWidget extends React.Component {
 		}
 	}
 
-
-	/* <ControlledTabs indexs={this.state.tab_index}/> */
-
 	render() {
-		const NewComponent = ScrollableTabsButtonAuto([1,2,3,4,5])
 		return (
 			<div style = { base_widget }>
 				<Button variant="contained" color="primary" href="#contained-buttons" onClick={() => this.websocket_clickhandler()}>
@@ -129,7 +120,7 @@ class MarketWidget extends React.Component {
 				</div>
 				<div style = { nav_bar }>
 
-					<NewComponent />
+					<ScrollableTabsButtonAuto />
 
 				</div>
 				{/* <PriceTrending data_list={ this.state.data_list } /> */}

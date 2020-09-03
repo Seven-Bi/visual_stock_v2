@@ -56,81 +56,55 @@ export default function ScrollableTabsButtonAuto(props) {
 	const [value, setValue] = React.useState(0)
 
 	const handleChange = (event, newValue) => {
-		setValue(newValue);
+		setValue(newValue)
 	}
+	//<Tab label='lol' {...a11yProps(0)} />
+	return (
+		<div className={classes.root}>
+			
+				<AppBar position="static" color="default">
+					<Tabs
+					value={value}
+					onChange={handleChange}
+					indicatorColor="primary"
+					textColor="primary"
+					variant="scrollable"
+					scrollButtons="auto"
+					aria-label="scrollable auto tabs example"
+					>
+						
+						<MyContext.Consumer>
+							{
+								context_value => {
+									let dict = context_value.data_structure
+									
+									var key_list = []
+									
+									for(var key in dict) {
+										key_list.push(key)
+									}
 
-	return class extends React.Component {
-		render() {
-			console.log(props.data_list)
-	        if (props.data_list) {
-	            return (
-	                <MyContext.Consumer>
-	                	{
-							market_data => 
-								(
-									<div>
-										lol
-										{/* { 
-											market_data.change(this.props.data_list, market_data.data) 
-										} */}
-									</div>
-								)
+									var count = 0
+									key_list.map(item => 
+										<Tab label={item} {...a11yProps(count)} />
+									)
+								}
+							}
+						</MyContext.Consumer>
+					</Tabs>
+				</AppBar>
+				<MyContext.Consumer>
+					{
+						context_value => {
+							return (
+								<TabPanel value={value} index={0}>
+									Item One
+								</TabPanel>
+							)
 						}
-	                </MyContext.Consumer>
-	            )
-	        }
-	        else {
-	        	return (
-	        		<div> Loading ... </div>	
-        		)
-	        }
-		}
-	}
-
-	// render() {
-	// 	return (
-	// 		<div className={classes.root}>
-	// 			<AppBar position="static" color="default">
-	// 				<Tabs
-	// 				value={value}
-	// 				onChange={handleChange}
-	// 				indicatorColor="primary"
-	// 				textColor="primary"
-	// 				variant="scrollable"
-	// 				scrollButtons="auto"
-	// 				aria-label="scrollable auto tabs example"
-	// 				>
-	// 					<Tab label="Item One" {...a11yProps(0)} />
-	// 					<Tab label="Item Two" {...a11yProps(1)} />
-	// 					<Tab label="Item Three" {...a11yProps(2)} />
-	// 					<Tab label="Item Four" {...a11yProps(3)} />
-	// 					<Tab label="Item Five" {...a11yProps(4)} />
-	// 					<Tab label="Item Six" {...a11yProps(5)} />
-	// 					<Tab label="Item Seven" {...a11yProps(6)} />
-	// 				</Tabs>
-	// 			</AppBar>
-	// 			<TabPanel value={value} index={0}>
-	// 				Item One
-	// 			</TabPanel>
-	// 			<TabPanel value={value} index={1}>
-	// 				Item Two
-	// 			</TabPanel>
-	// 			<TabPanel value={value} index={2}>
-	// 				Item Three
-	// 			</TabPanel>
-	// 			<TabPanel value={value} index={3}>
-	// 				Item Four
-	// 			</TabPanel>
-	// 			<TabPanel value={value} index={4}>
-	// 				Item Five
-	// 			</TabPanel>
-	// 			<TabPanel value={value} index={5}>
-	// 				Item Six
-	// 			</TabPanel>
-	// 			<TabPanel value={value} index={6}>
-	// 				Item Seven
-	// 			</TabPanel>
-	// 		</div>
-	// 	)
-	// }
+					}
+				</MyContext.Consumer>
+		</div>
+	)
+	
 }

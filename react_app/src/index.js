@@ -95,6 +95,7 @@ class Index extends React.Component {
             return (
                 <MyContext.Provider
                     value = {{
+                        data_structure: this.state.data_structure,
                         data: this.state.market_data,
                         change: calculate
                     }}
