@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "https://www.binance.com/exchange-api/v1/public/asset-service/product",
+  "engines": {
+    "node": "14.9.0",
+    "npm": "6.14.8" 
+  },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@testing-library/jest-dom": "^4.2.4",
