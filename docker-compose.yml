@@ -3,12 +3,6 @@ version: '3'
 
 services:
     web:
-        build: ./react_app
+        build: .
         ports: 
-            - "8080:80"
-        depends_on:
-            - proxy
-    proxy:
-        build: ./proxy_server
-        ports: 
-            - "8081:80"
+            - "8080:3000"
